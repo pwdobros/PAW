@@ -1,7 +1,15 @@
 from fastapi import FastAPI, HTTPException, Response
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 app = FastAPI(title="TaskBoard")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    expose_headers=["X-Total-Count"],
+)
 
 TASKS: dict[int, dict] = {
     1: {"id": 1, "title": "Przygotować środowisko", "status": "done", "priority": "high"},
